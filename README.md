@@ -8,7 +8,7 @@ MoviesApp is an application that shows movie details.
 
 ## Architecture
 
-![Screenshot](https://github.com/liort2020/MoviesApp/blob/master/Assets/MoviesAppArchitecture.png)
+![Screenshot](https://github.com/liort2020/MoviesApp/blob/develop/Assets/MoviesAppArchitecture.png)
 
 This application is implemented in MVVM and Clean architecture with three layers:
 - **Presentation layer**
