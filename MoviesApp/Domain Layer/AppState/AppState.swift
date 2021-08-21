@@ -14,6 +14,7 @@ struct AppState {
 
 extension AppState {
     struct ViewRouting {
-        
+        var moviesList = MoviesListViewRouting()
+        var movieDetails = MovieDetailsViewRouting()
     }
 }
