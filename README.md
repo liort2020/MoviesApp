@@ -114,3 +114,15 @@ Run UI tests:
 1. Navigate to `MoviesAppUITests` target
 
 2. Run the test from `Product` ➞ `Test` or use `⌘U` shortcuts
+
+    
+### Screen recording
+
+1. List of movies
+  <img src="https://github.com/liort2020/MoviesApp/blob/develop/Assets/MoviesAppScreenRecording.gif" width="220"/>
+
+2. Favorites
+<img src="https://github.com/liort2020/MoviesApp/blob/develop/Assets/MoviesAppFavoritesScreenRecording.gif" width="220"/>
+
+3. Filter movies
+<img src="https://github.com/liort2020/MoviesApp/blob/develop/Assets/MoviesAppFilterMoviesScreenRecording.gif" width="220"/>
