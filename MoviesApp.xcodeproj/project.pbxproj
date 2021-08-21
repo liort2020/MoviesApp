@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		496CE1C326D12FFA004796A8 /* MoviesAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496CE1C226D12FFA004796A8 /* MoviesAppApp.swift */; };
+		496CE1C326D12FFA004796A8 /* MoviesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496CE1C226D12FFA004796A8 /* MoviesApp.swift */; };
 		496CE1C526D12FFA004796A8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496CE1C426D12FFA004796A8 /* ContentView.swift */; };
 		496CE1C726D12FFD004796A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 496CE1C626D12FFD004796A8 /* Assets.xcassets */; };
 		496CE1CA26D12FFD004796A8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 496CE1C926D12FFD004796A8 /* Preview Assets.xcassets */; };
@@ -15,7 +15,7 @@
 
 /* Begin PBXFileReference section */
 		496CE1BF26D12FFA004796A8 /* MoviesApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoviesApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		496CE1C226D12FFA004796A8 /* MoviesAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesAppApp.swift; sourceTree = "<group>"; };
+		496CE1C226D12FFA004796A8 /* MoviesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesApp.swift; sourceTree = "<group>"; };
 		496CE1C426D12FFA004796A8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		496CE1C626D12FFD004796A8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		496CE1C926D12FFD004796A8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -52,7 +52,7 @@
 		496CE1C126D12FFA004796A8 /* MoviesApp */ = {
 			isa = PBXGroup;
 			children = (
-				496CE1C226D12FFA004796A8 /* MoviesAppApp.swift */,
+				496CE1C226D12FFA004796A8 /* MoviesApp.swift */,
 				496CE1C426D12FFA004796A8 /* ContentView.swift */,
 				496CE1C626D12FFD004796A8 /* Assets.xcassets */,
 				496CE1CB26D12FFD004796A8 /* Info.plist */,
@@ -139,7 +139,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				496CE1C526D12FFA004796A8 /* ContentView.swift in Sources */,
-				496CE1C326D12FFA004796A8 /* MoviesAppApp.swift in Sources */,
+				496CE1C326D12FFA004796A8 /* MoviesApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
