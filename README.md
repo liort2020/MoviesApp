@@ -8,7 +8,7 @@ MoviesApp is an application that shows movie details.
 
 ## Architecture
 
-![Screenshot](https://github.com/liort2020/MoviesApp/blob/develop/Assets/MoviesAppArchitecture.png)
+![Screenshot](https://github.com/liort2020/MoviesApp/blob/master/Assets/MoviesAppArchitecture.png)
 
 This application is implemented in MVVM and Clean architecture with three layers:
 - **Presentation layer**
@@ -119,10 +119,10 @@ Run UI tests:
 ### Screen recording
 
 1. List of movies
-  <img src="https://github.com/liort2020/MoviesApp/blob/develop/Assets/MoviesAppScreenRecording.gif" width="220"/>
+  <img src="https://github.com/liort2020/MoviesApp/blob/master/Assets/MoviesAppScreenRecording.gif" width="220"/>
 
 2. Favorites
-<img src="https://github.com/liort2020/MoviesApp/blob/develop/Assets/MoviesAppFavoritesScreenRecording.gif" width="220"/>
+<img src="https://github.com/liort2020/MoviesApp/blob/master/Assets/MoviesAppFavoritesScreenRecording.gif" width="220"/>
 
 3. Filter movies
-<img src="https://github.com/liort2020/MoviesApp/blob/develop/Assets/MoviesAppFilterMoviesScreenRecording.gif" width="220"/>
+<img src="https://github.com/liort2020/MoviesApp/blob/master/Assets/MoviesAppFilterMoviesScreenRecording.gif" width="220"/>
