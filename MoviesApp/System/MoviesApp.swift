@@ -10,9 +10,13 @@ import SwiftUI
 
 @main
 struct MoviesApp: App {
+    private let diContainer = DIContainer.boot()
+    
     var body: some Scene {
         WindowGroup {
-            EmptyView()
+            MoviesTabView(moviesListViewModel: RealMoviesListViewModel(diContainer: diContainer),
+                          favoritesMoviesListViewModel: RealMoviesListViewModel(diContainer: diContainer))
+                .inject(diContainer)
         }
     }
 }
