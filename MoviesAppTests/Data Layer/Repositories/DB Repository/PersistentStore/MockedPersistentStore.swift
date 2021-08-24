@@ -98,22 +98,6 @@ extension MockedPersistentStore: PersistentStore {
         }
     }
     
-    func addImage<Item>(fetchRequest: NSFetchRequest<Item>, _ update: @escaping ([Item]) -> Void) -> AnyPublisher<[Item], Error> where Item : NSFetchRequestResult {
-        do {
-            let context = inMemoryContainer.viewContext
-            context.reset()
-            let items = try context.fetch(fetchRequest)
-            update(items)
-            add(.update(context.snapshot))
-            
-            return Future<[Item], Error> { promise in
-                promise(.success(items))
-            }.publish()
-        } catch let error {
-            return Fail<[Item], Error>(error: error).publish()
-        }
-    }
-    
     func delete<Item: NSManagedObject>(_ fetchRequest: NSFetchRequest<Item>) -> AnyPublisher<Void, Error> {
         let context = inMemoryContainer.viewContext
         

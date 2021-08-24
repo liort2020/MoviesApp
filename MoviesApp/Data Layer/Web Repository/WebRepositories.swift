@@ -11,6 +11,5 @@ import Foundation
 extension DIContainer {
     struct WebRepositories {
         let moviesWebRepository: MoviesWebRepository
-        let imagesWebRepository: ImagesWebRepository
     }
 }

@@ -46,10 +46,6 @@ struct MoviesNavigationView<ViewModel>: View where ViewModel: MoviesListViewMode
         moviesListViewModel.movies
     }
     
-    private var isLoadingBinding: Binding<Bool> {
-        $moviesListViewModel.isLoading
-    }
-    
     private func filterButtonView() -> some View {
         FilterButtonView(showModalFilterView: $showModalFilterView)
     }

@@ -11,7 +11,6 @@ import Foundation
 enum WebError: Error {
     case invalidURL
     case noResponse
-    case invalidImage
     case httpCode(HTTPError)
 }
 
