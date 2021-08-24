@@ -39,20 +39,4 @@ extension WebRepository {
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
-    
-    func requestImageURL(endpoint: Endpoint) -> AnyPublisher<Data?, Error> {
-        guard let urlRequest = try? endpoint.request(url: baseURL) else {
-            return Fail(error: WebError.invalidURL)
-                .eraseToAnyPublisher()
-        }
-        
-        return session
-            .dataTaskPublisher(for: urlRequest)
-            .tryMap { (data, response) in
-                return data
-            }
-            .subscribe(on: bgQueue)
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
-    }
 }

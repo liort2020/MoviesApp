@@ -95,10 +95,6 @@ struct MovieCellView: View {
     private let topTitlePadding: CGFloat = 4
     private let titleNumberOfLines = 2
     private let defaultEmptyTitle = ""
-    // Favorite Image
-    private let favoriteSystemImage = "star.fill"
-    private let favoriteImageColor: Color = .yellow
-    private let defaultFavoriteImageSize: CGFloat = 18
     // Movie Year Title
     private let yearTitleColor: Color = .primary
     private let yearTitleFont: Font = .system(size: 17, weight: .medium)

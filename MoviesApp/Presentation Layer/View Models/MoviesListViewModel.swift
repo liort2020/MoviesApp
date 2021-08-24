@@ -17,7 +17,6 @@ protocol MoviesListViewModel: ObservableObject {
     
     func load(favorites: Bool)
     func fetchMovies(enableIsLoading: Bool)
-    func fetchImages(enableIsLoading: Bool)
 }
 
 enum FilterType: String, CaseIterable {
@@ -78,26 +77,6 @@ class RealMoviesListViewModel: MoviesListViewModel {
                 } receiveValue: { [weak self] movies in
                     self?.currentPage += 1
                     self?.update(movies: movies, enableIsLoading: enableIsLoading)
-                }
-                .store(in: &self.subscriptions)
-        }
-    }
-    
-    func fetchImages(enableIsLoading: Bool) {
-        if enableIsLoading {
-            isLoading(true)
-        }
-        
-        diContainer.interactors?.moviesInteractor.fetchImages { publisher in
-            publisher
-                .sink { completion in
-                    if let error = completion.checkError() {
-                        print(error.localizedDescription)
-                    }
-                } receiveValue: { [weak self] _ in
-                    if enableIsLoading {
-                        self?.isLoading(false)
-                    }
                 }
                 .store(in: &self.subscriptions)
         }

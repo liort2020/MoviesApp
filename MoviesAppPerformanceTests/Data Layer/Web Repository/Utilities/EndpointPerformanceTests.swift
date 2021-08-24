@@ -11,12 +11,6 @@ import XCTest
 
 final class EndpointPerformanceTests: XCTestCase {
     private let testURL = "https://test.com"
-    private var fakeMovie: Movie?
-    
-    override func setUp() {
-        super.setUp()
-        fakeMovie = FakeMovies.all.first
-    }
     
     func test_getUpcomingMovies_performance() throws {
         let testableObject = RealMoviesWebRepository.MoviesEndpoint.getUpcomingMovies
@@ -24,10 +18,5 @@ final class EndpointPerformanceTests: XCTestCase {
         measure {
             let _ = try? testableObject.request(url: testURL)
         }
-    }
-    
-    override func tearDown() {
-        fakeMovie = nil
-        super.tearDown()
     }
 }

@@ -12,8 +12,6 @@ import Combine
 
 final class WebRepositoryTests: XCTestCase {
     private var moviesEndpoint: RealMoviesWebRepository.MoviesEndpoint?
-    private var imagesEndpoint: RealImagesWebRepository.ImagesEndpoint?
-    private let testImagePathURL = TestWebRepository.testImagePathURL
     private static let expectationsTimeOut: TimeInterval = 5.0
     private var subscriptions = Set<AnyCancellable>()
     
@@ -22,7 +20,6 @@ final class WebRepositoryTests: XCTestCase {
     override func setUp() {
         super.setUp()
         moviesEndpoint = RealMoviesWebRepository.MoviesEndpoint.getUpcomingMovies
-        imagesEndpoint = RealImagesWebRepository.ImagesEndpoint.getPosterImage(path: testImagePathURL)
         testableObject = TestWebRepository()
     }
     
@@ -98,40 +95,8 @@ final class WebRepositoryTests: XCTestCase {
         wait(for: [expectation], timeout: Self.expectationsTimeOut)
     }
     
-    func test_requestImageURL() throws {
-        let expectation = expectation(description: "requestURL_withoutReturningData")
-        let testableObject = try XCTUnwrap(testableObject)
-        
-        // Given
-        let data = try XCTUnwrap(MockedMovie.testImageData())
-        let imagesEndpoint = try XCTUnwrap(imagesEndpoint)
-        
-        MockURLProtocol.requestHandler = { request in
-            guard let url = request.url else { throw MockWebError.request }
-            guard let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil) else { throw MockWebError.response }
-            return (response, data)
-        }
-        
-        // When
-        testableObject
-            .requestImageURL(endpoint: imagesEndpoint)
-            .sink { completion in
-                // Then
-                if let error = completion.checkError() {
-                    XCTFail("Unexpected error: \(error.localizedDescription)")
-                }
-            } receiveValue: { data in
-                XCTAssertNotNil(data)
-                expectation.fulfill()
-            }
-            .store(in: &subscriptions)
-        
-        wait(for: [expectation], timeout: Self.expectationsTimeOut)
-    }
-    
     override func tearDown() {
         moviesEndpoint = nil
-        imagesEndpoint = nil
         testableObject = nil
         subscriptions.removeAll()
         super.tearDown()

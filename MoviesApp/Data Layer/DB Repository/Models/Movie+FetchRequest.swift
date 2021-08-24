@@ -19,10 +19,6 @@ extension Movie {
         return request
     }
     
-    static func requestAllItemsForDelete() -> NSFetchRequest<Movie> {
-        NSFetchRequest<Movie>(entityName: entityName)
-    }
-    
     static func requestItem(using id: Int) -> NSFetchRequest<Movie> {
         let request = NSFetchRequest<Movie>(entityName: entityName)
         request.predicate = NSPredicate(format: "id == %i", Int32(id))

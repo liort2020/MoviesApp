@@ -152,48 +152,6 @@ final class MoviesDBRepositoryTests: XCTestCase {
         waitForExpectations(timeout: Self.expectationsTimeOut)
     }
     
-    // MARK: - Store image test
-    func test_storeImage() throws {
-        let testableObject = try XCTUnwrap(testableObject)
-        let moviesListWebModel: MoviesListWebModel = try XCTUnwrap(MockedMovie.load(fromResource: MockedMovie.mockedMoviesFileName))
-        
-        // Given
-        let numberOfItems = 20
-        let favorite = false
-        let updateOneItemSnapshot = MockedPersistentStore.Snapshot(insertedObjects: 1, updatedObjects: 0, deletedObjects: 0)
-        let updateItemsSnapshot = Array(repeating: updateOneItemSnapshot, count: numberOfItems)
-        var expectedActions = updateItemsSnapshot.map { MockedPersistentStore.Action.update($0) }
-        
-        let updateImageSnapshot = MockedPersistentStore.Snapshot(insertedObjects: 0, updatedObjects: 0, deletedObjects: 0)
-        expectedActions.append(MockedPersistentStore.Action.update(updateImageSnapshot))
-        mockedPersistentStore.actions = MockedList(expectedActions: expectedActions)
-        
-        let imageData = try XCTUnwrap(MockedMovie.testImageData())
-        
-        let expectation = expectation(description: "storeImage")
-        
-        // When
-        testableObject
-            .store(moviesListWebModel: moviesListWebModel, movieType: .upcoming, favorite: favorite)
-            // Save image
-            .flatMap { movies -> AnyPublisher<[Movie], Error> in
-                let movie = movies[0]
-                return testableObject.storeImage(data: imageData, movieId: Int(movie.id))
-            }
-            .sink { completion in
-                if let error = completion.checkError() {
-                    XCTFail("Unexpected error: \(error.localizedDescription)")
-                }
-            } receiveValue: { movies in
-                // Then
-                self.mockedPersistentStore.verify()
-                expectation.fulfill()
-            }
-            .store(in: &subscriptions)
-        
-        waitForExpectations(timeout: Self.expectationsTimeOut)
-    }
-    
     // MARK: - tearDown
     override func tearDown() {
         testableObject = nil
