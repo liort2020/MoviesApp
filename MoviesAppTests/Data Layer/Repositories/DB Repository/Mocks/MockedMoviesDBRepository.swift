@@ -16,7 +16,6 @@ final class MockedMoviesDBRepository: Mock, MoviesDBRepository {
         case fetchMovies(Bool)
         case fetchMovie(id: Int)
         case store(moviesListWebModel: MoviesListWebModel, movieType: MovieType, favorite: Bool)
-        case storeImage(data: Data?, movieId: Int)
         case updateMovie(id: Int, favorite: Bool)
         case delete(movieId: Int)
     }
@@ -25,7 +24,6 @@ final class MockedMoviesDBRepository: Mock, MoviesDBRepository {
     var fetchMoviesResult: Result<[Movie], Error> = .failure(MockedError.valueNeedToBeSet)
     var fetchMovieResult: Result<[Movie], Error> = .failure(MockedError.valueNeedToBeSet)
     var storeMoviesListWebModelResult: Result<[Movie], Error> = .failure(MockedError.valueNeedToBeSet)
-    var storeImageResult: Result<[Movie], Error> = .failure(MockedError.valueNeedToBeSet)
     var updateMovieResult: Result<Movie?, Error> = .failure(MockedError.valueNeedToBeSet)
     var deleteResult: Result<Void, Error> = .failure(MockedError.valueNeedToBeSet)
     
@@ -42,11 +40,6 @@ final class MockedMoviesDBRepository: Mock, MoviesDBRepository {
     func store(moviesListWebModel: MoviesListWebModel, movieType: MovieType, favorite: Bool) -> AnyPublisher<[Movie], Error> {
         add(.store(moviesListWebModel: moviesListWebModel, movieType: movieType, favorite: favorite))
         return storeMoviesListWebModelResult.publish()
-    }
-    
-    func storeImage(data: Data?, movieId: Int) -> AnyPublisher<[Movie], Error> {
-        add(.storeImage(data: data, movieId: movieId))
-        return storeImageResult.publish()
     }
     
     func updateMovie(id: Int, favorite: Bool) -> AnyPublisher<Movie?, Error> {

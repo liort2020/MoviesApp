@@ -14,7 +14,6 @@ import CoreData
 final class MoviesInteractorTests: XCTestCase {
     private let appState = CurrentValueSubject<AppState, Never>(AppState())
     private lazy var mockedMoviesWebRepository = MockedMoviesWebRepository()
-    private lazy var mockedImagesWebRepository = MockedImagesWebRepository()
     private lazy var mockedMoviesDBRepository = MockedMoviesDBRepository()
     private lazy var fakeMovies = FakeMovies.all
     private static let expectationsTimeOut: TimeInterval = 5.0
@@ -27,7 +26,6 @@ final class MoviesInteractorTests: XCTestCase {
         super.setUp()
         appState.value = AppState()
         testableObject = RealMoviesInteractor(moviesWebRepository: mockedMoviesWebRepository,
-                                              imagesWebRepository: mockedImagesWebRepository,
                                               moviesDBRepository: mockedMoviesDBRepository,
                                               appState: appState)
     }
@@ -39,7 +37,6 @@ final class MoviesInteractorTests: XCTestCase {
         // Given
         let fetchFavorites = false
         mockedMoviesWebRepository.actions = MockedList(expectedActions: [])
-        mockedImagesWebRepository.actions = MockedList(expectedActions: [])
         mockedMoviesDBRepository.actions = MockedList(expectedActions: [
             .fetchMovies(fetchFavorites)
         ])
@@ -59,7 +56,6 @@ final class MoviesInteractorTests: XCTestCase {
                 XCTAssertFalse(movies.isEmpty)
                 XCTAssertEqual(movies.count, self.fakeMovies.count, "Receive \(movies.count) items instead of \(self.fakeMovies.count) items")
                 self.mockedMoviesWebRepository.verify()
-                self.mockedImagesWebRepository.verify()
                 self.mockedMoviesDBRepository.verify()
                 expectation.fulfill()
             }
@@ -105,7 +101,6 @@ final class MoviesInteractorTests: XCTestCase {
                         XCTAssertFalse(movies.isEmpty)
                         XCTAssertEqual(movies.count, self.fakeMovies.count, "Receive \(movies.count) items instead of \(self.fakeMovies.count) items")
                         self.mockedMoviesWebRepository.verify()
-                        self.mockedImagesWebRepository.verify()
                         expectation.fulfill()
                     }
                     .store(in: &self.subscriptions)
@@ -146,7 +141,6 @@ final class MoviesInteractorTests: XCTestCase {
                 XCTAssertFalse(movies.isEmpty)
                 XCTAssertEqual(movies.count, onlyOneFakeMovie.count, "Receive \(movies.count) items instead of \(onlyOneFakeMovie.count) items")
                 self.mockedMoviesWebRepository.verify()
-                self.mockedImagesWebRepository.verify()
                 self.mockedMoviesDBRepository.verify()
                 expectation.fulfill()
             }
@@ -154,50 +148,7 @@ final class MoviesInteractorTests: XCTestCase {
         
         wait(for: [expectation], timeout: Self.fetchAllExpectationsTimeOut)
     }
-    
-    func test_fetchImages() throws {
-        let testableObject = try XCTUnwrap(testableObject)
-        let expectation = expectation(description: "fetchImages")
         
-        // Given
-        let fetchFavorites = false
-        let emptyImageData: Data? = Data()
-        mockedMoviesWebRepository.actions = MockedList(expectedActions: [])
-        mockedImagesWebRepository.actions = MockedList(expectedActions: fakeMovies.map { .download(imagePath: $0.posterPath) })
-        
-        var dbRepositoryExpectedActions: [MockedMoviesDBRepository.Action] = []
-        dbRepositoryExpectedActions.append(.fetchMovies(fetchFavorites))
-        dbRepositoryExpectedActions.append(contentsOf: fakeMovies.map { .storeImage(data: emptyImageData,
-                                                                                    movieId: Int($0.id)) })
-        dbRepositoryExpectedActions.append(.fetchMovies(fetchFavorites))
-        mockedMoviesDBRepository.actions = MockedList(expectedActions: dbRepositoryExpectedActions)
-        
-        // Set DBRepository response
-        mockedMoviesDBRepository.fetchMoviesResult = .success(fakeMovies)
-        
-        // When
-        testableObject
-            .fetchImages { publisher in
-                publisher
-                    .sink { completion in
-                        if let error = completion.checkError() {
-                            XCTFail("Unexpected error: \(error.localizedDescription)")
-                        }
-                    } receiveValue: { movies in
-                        // Then
-                        XCTAssertFalse(movies.isEmpty)
-                        XCTAssertEqual(movies.count, self.fakeMovies.count, "Receive \(movies.count) items instead of \(self.fakeMovies.count) items")
-                        self.mockedMoviesWebRepository.verify()
-                        self.mockedImagesWebRepository.verify()
-                        self.mockedMoviesDBRepository.verify()
-                        expectation.fulfill()
-                    }
-                    .store(in: &self.subscriptions)
-            }
-        
-        wait(for: [expectation], timeout: Self.expectationsTimeOut)
-    }
-    
     func test_updateMovie() throws {
         let testableObject = try XCTUnwrap(testableObject)
         let expectation = expectation(description: "updateMovie")
@@ -207,7 +158,6 @@ final class MoviesInteractorTests: XCTestCase {
         let movieId = Int(onlyOneFakeMovie.id)
         let isFavorite = onlyOneFakeMovie.favorite
         mockedMoviesWebRepository.actions = MockedList(expectedActions: [])
-        mockedImagesWebRepository.actions = MockedList(expectedActions: [])
         mockedMoviesDBRepository.actions = MockedList(expectedActions: [
             .updateMovie(id: movieId, favorite: isFavorite)
         ])
@@ -227,7 +177,6 @@ final class MoviesInteractorTests: XCTestCase {
                 XCTAssertNotNil(movie)
                 XCTAssertEqual(movie?.favorite, isFavorite, "Expected to receive a favorite: \(isFavorite)")
                 self.mockedMoviesWebRepository.verify()
-                self.mockedImagesWebRepository.verify()
                 self.mockedMoviesDBRepository.verify()
                 expectation.fulfill()
             }

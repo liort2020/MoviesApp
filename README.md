@@ -26,19 +26,16 @@ This application is implemented in MVVM and Clean architecture with three layers
   - `WebRepository` - Retrieves data from the server using `dataTaskPublisher`.
   - `MoviesWebRepository` - Allow us to get all movies, implements `WebRepository` protocol. `RealMoviesWebRepository` and `MockMoviesWebRepository` (For Tests) - Implement `MoviesWebRepository` protocol (Strategy design pattern).
   - `RealMoviesWebRepository` - Allow us to communicate with the server using URLSession, implements `MoviesWebRepository` protocol.
-  - `ImagesWebRepository` - Allow us to download the image. `RealImagesWebRepository` and `MockImagesWebRepository` (For Tests) - Implement `ImagesWebRepository` protocol (Strategy design pattern).
-  - `RealImagesWebRepository` - Allow us to communicate with the server using URLSession, implements `ImagesWebRepository` protocol.
   - `WebError` - The error that `WebRepository` can throw.
-  - `Endpoint` - Prepares the URLRequest to connect to the server (`MoviesEndpoint` and `ImagesEndpoint` implement this protocol).
+  - `Endpoint` - Prepares the URLRequest to connect to the server (`MoviesEndpoint` implements this protocol).
   - `HTTPMethod` - The HTTP methods that allow in this application.
   - `MockMoviesWebRepository` (For Tests) - Allow us to communicate with fake server, implements `MoviesWebRepository` and `TestWebRepository`.
-  - `MockImagesWebRepository` (For Tests) - Allow us to communicate with fake server, implements `ImagesWebRepository` and `TestWebRepository`.
   - `TestWebRepository` (For Tests) - Retrieves data from fake server using mocked session, implements `WebRepository`.
   - `MockURLProtocol` (For Tests) - Get request and return mock response, implements `URLProtocol`.
   - `MockWebError` (For Tests) - The error that `TestWebRepository` can throw.
   
    - **DBRepositories**:
-  - `PersistentStore` - Allow us to fetch, update, add image and delete items from `CoreData` database. `CoreDataStack` and `MockPersistentStore` (For Tests) - Implement `PersistentStore` protocol (Strategy design pattern).
+  - `PersistentStore` - Allow us to fetch, update and delete items from `CoreData` database. `CoreDataStack` and `MockPersistentStore` (For Tests) - Implement `PersistentStore` protocol (Strategy design pattern).
   - `CoreDataStack` - Allow access to `CoreData` storage, implements `PersistentStore`.
   - `MockPersistenceController` (For Tests) - Allow access to in-memory storage for testing, implements `PersistentStore`.
   - `MoviesDBRepository` - Allow us to fetch, save, update and delete movies. `RealMoviesDBRepository` and `MockMoviesDBRepository` (For Tests) - Implement `MoviesDBRepository` protocol (Strategy design pattern).
@@ -65,9 +62,9 @@ This application is implemented in MVVM and Clean architecture with three layers
   - HTTP Method: `GET`
   - URL: [`https://developers.themoviedb.org/3/movie/now_playing?api_key={api_key}&page={page}`](https://api.themoviedb.org/3/movie/now_playing?api_key=2578a81bfe04d4856dfe3525aab74e17&page=1)
   
-  - Get a movie poster
-    - HTTP Method: `GET`
-    - URL: [`https://image.tmdb.org/t/p/original/{poster_path}`](https://image.tmdb.org/t/p/original/cycDz68DtTjJrDJ1fV8EBq2Xdpb.jpg)
+- Get a movie poster
+  - HTTP Method: `GET`
+  - URL: [`https://image.tmdb.org/t/p/original/{poster_path}`](https://image.tmdb.org/t/p/original/cycDz68DtTjJrDJ1fV8EBq2Xdpb.jpg)
   
   
 ## Dependencies - Pods

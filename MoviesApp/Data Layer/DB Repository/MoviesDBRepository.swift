@@ -13,7 +13,6 @@ protocol MoviesDBRepository {
     func fetchMovies(favorites: Bool) -> AnyPublisher<[Movie], Error>
     func fetchMovie(id: Int) -> AnyPublisher<[Movie], Error>
     func store(moviesListWebModel: MoviesListWebModel, movieType: MovieType, favorite: Bool) -> AnyPublisher<[Movie], Error>
-    func storeImage(data: Data?, movieId: Int) -> AnyPublisher<[Movie], Error>
     func updateMovie(id: Int, favorite: Bool) -> AnyPublisher<Movie?, Error>
     func delete(movieId: Int) -> AnyPublisher<Void, Error>
 }
@@ -60,19 +59,6 @@ struct RealMoviesDBRepository: MoviesDBRepository {
         return Publishers.MergeMany(publishers)
             .collect()
             .eraseToAnyPublisher()
-    }
-    
-    func storeImage(data: Data?, movieId: Int) -> AnyPublisher<[Movie], Error> {
-        guard let data = data, !data.isEmpty else {
-            return Empty()
-                .eraseToAnyPublisher()
-        }
-        
-        let fetchRequest = Movie.requestItem(using: movieId)
-        return persistentStore
-            .addImage(fetchRequest: fetchRequest) {
-                $0.forEach { $0.imageData = data }
-            }
     }
     
     func updateMovie(id movieId: Int, favorite: Bool) -> AnyPublisher<Movie?, Error> {

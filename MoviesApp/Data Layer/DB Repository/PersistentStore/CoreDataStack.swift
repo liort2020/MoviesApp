@@ -13,7 +13,6 @@ protocol PersistentStore {
     func fetch<Item>(_ fetchRequest: NSFetchRequest<Item>) -> AnyPublisher<[Item], Error>
     func update<Item>(fetchRequest: NSFetchRequest<Item>, update: @escaping (Item) -> Void, createNew: @escaping (NSManagedObjectContext) -> Item) -> AnyPublisher<Item, Error>
     func update<Item>(fetchRequest: NSFetchRequest<Item>, update: @escaping (Item) -> Void) -> AnyPublisher<Item?, Error>
-    func addImage<Item>(fetchRequest: NSFetchRequest<Item>, _ update: @escaping ([Item]) -> Void) -> AnyPublisher<[Item], Error>
     func delete<Item: NSManagedObject>(_ fetchRequest: NSFetchRequest<Item>) -> AnyPublisher<Void, Error>
 }
 
@@ -102,33 +101,6 @@ struct CoreDataStack: PersistentStore {
                         
                         try context.save()
                         promise(.success(result))
-                    } catch {
-                        context.reset()
-                        promise(.failure(error))
-                    }
-                }
-            }
-        }
-        .eraseToAnyPublisher()
-    }
-    
-    func addImage<Item>(fetchRequest: NSFetchRequest<Item>, _ update: @escaping ([Item]) -> Void) -> AnyPublisher<[Item], Error> {
-        Future<[Item], Error> { [weak container] promise in
-            coreDataQueue.async {
-                guard let context = container?.newBackgroundContext() else { return }
-                
-                context.performAndWait {
-                    do {
-                        let resultItems = try context.fetch(fetchRequest)
-                        update(resultItems)
-                        
-                        guard context.hasChanges else {
-                            context.reset()
-                            promise(.success(resultItems))
-                            return
-                        }
-                        try context.save()
-                        promise(.success(resultItems))
                     } catch {
                         context.reset()
                         promise(.failure(error))

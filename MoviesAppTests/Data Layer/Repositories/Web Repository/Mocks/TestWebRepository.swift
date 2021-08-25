@@ -11,7 +11,6 @@ import XCTest
 
 class TestWebRepository: WebRepository {
     static let testMoviesURL = "https://test.com"
-    static let testImagePathURL = "/test.jpg"
     
     let bgQueue = DispatchQueue(label: "test_web_repository_queue")
     let session: URLSession = .mockedSession

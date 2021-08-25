@@ -28,8 +28,7 @@ struct DIContainer {
     
     private static func configureWebRepositories(using session: URLSession) -> DIContainer.WebRepositories {
         let moviesWebRepository = RealMoviesWebRepository(session: session, baseURL: Constants.baseMoviesUrl)
-        let imagesWebRepository = RealImagesWebRepository(session: session, baseURL: Constants.baseImagesUrl)
-        return DIContainer.WebRepositories(moviesWebRepository: moviesWebRepository, imagesWebRepository: imagesWebRepository)
+        return DIContainer.WebRepositories(moviesWebRepository: moviesWebRepository)
     }
     
     private static func configureDBRepositories() -> DIContainer.DBRepositories {
@@ -42,7 +41,6 @@ struct DIContainer {
         let moviesWebRepository: MoviesWebRepository = webRepositories.moviesWebRepository
         
         let moviesInteractor = RealMoviesInteractor(moviesWebRepository: moviesWebRepository,
-                                                    imagesWebRepository: webRepositories.imagesWebRepository,
                                                     moviesDBRepository: dbRepositories.moviesDBRepository,
                                                     appState: appState)
         return DIContainer.Interactors(moviesInteractor: moviesInteractor)

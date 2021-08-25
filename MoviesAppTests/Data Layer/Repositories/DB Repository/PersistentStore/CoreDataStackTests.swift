@@ -81,34 +81,6 @@ final class CoreDataStackTests: XCTestCase {
                 XCTAssertEqual(movie.releaseDate, movieWebModel.releaseDate)
                 XCTAssertEqual(movie.rating, movieWebModel.rating)
                 XCTAssertEqual(movie.posterPath, movieWebModel.posterPath)
-                XCTAssertNil(movie.imageData)
-                expectation.fulfill()
-            }
-            .store(in: &subscriptions)
-        
-        wait(for: [expectation], timeout: Self.expectationsTimeOut)
-    }
-    
-    func test_addImage() throws {
-        let testableObject = try XCTUnwrap(testableObject)
-        let expectation = expectation(description: "addImage")
-        
-        // Given
-        let testItemId = Int32.random(in: 1..<Int32.max)
-        let fetchRequest = Movie.requestItem(using: Int(testItemId))
-        let emptyData = Data()
-        
-        // When
-        testableObject
-            .addImage(fetchRequest: fetchRequest) {
-                $0.forEach { $0.imageData = emptyData }
-            }
-            .sink { completion in
-                if let error = completion.checkError() {
-                    XCTFail("Unexpected error: \(error.localizedDescription)")
-                }
-            } receiveValue: { _ in
-                // Then
                 expectation.fulfill()
             }
             .store(in: &subscriptions)

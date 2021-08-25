@@ -19,7 +19,6 @@ class MockedMoviesListViewModel: Mock, MoviesListViewModel {
     enum Action: Equatable {
         case load(Bool)
         case fetchMovies(enableIsLoading: Bool)
-        case fetchImages(enableIsLoading: Bool)
     }
     var actions = MockedList<Action>(expectedActions: [])
     
@@ -36,9 +35,5 @@ class MockedMoviesListViewModel: Mock, MoviesListViewModel {
     
     func fetchMovies(enableIsLoading: Bool) {
         add(.fetchMovies(enableIsLoading: enableIsLoading))
-    }
-    
-    func fetchImages(enableIsLoading: Bool) {
-        add(.fetchImages(enableIsLoading: enableIsLoading))
     }
 }

@@ -46,22 +46,6 @@ final class MoviesListViewModelTests: XCTestCase {
         mockedMoviesInteractor.verify()
     }
     
-    func test_fetchImages() throws {
-        let testableObject = try XCTUnwrap(testableObject)
-        // Given
-        let enableIsLoading = true
-        mockedMoviesInteractor.actions = MockedList(expectedActions: [
-            .fetchImages
-        ])
-        
-        // When
-        testableObject
-            .fetchImages(enableIsLoading: enableIsLoading)
-        
-        // Then
-        mockedMoviesInteractor.verify()
-    }
-    
     override func tearDown() {
         testableObject = nil
         super.tearDown()
